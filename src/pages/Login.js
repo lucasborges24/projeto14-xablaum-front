@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { Link } from "react-router-dom"
 
 import { Input } from "../shared/Input"
-import { ButtonWhite, ButtonOrange } from "../shared/Button"
+import { ButtonWhite } from "../shared/Button"
 
 function Login() {
 
@@ -48,7 +48,7 @@ function Login() {
                 </ButtonWhite>
             </Form>
             <GoToSignUp>
-                <Link to='/cadasatro'>Não tem login? Cadastre-se agora!</Link> 
+                <Link to='/cadastro'>Não tem login? Cadastre-se agora!</Link> 
             </GoToSignUp>
         </>
     )

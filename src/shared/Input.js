@@ -52,12 +52,20 @@ const InputStyle = styled.input`
     padding: 10px;
     background: none;
     
+    ::placeholder {
+        color: transparent;
+        transition: 50ms ease-out;
+    }
 
+    :focus::placeholder {
+        color: #8b8b91;
+    }
     :hover {
     }
 
     :focus {
         border-color: #f26532;
+        color: rgb(86, 92, 105);
     }
 
     :focus ~ label,
@@ -72,7 +80,6 @@ const InputStyle = styled.input`
 
 const LabelStyle = styled.label`
     /* margin-top: 200px; */
-    color: red;
     position: absolute;
     top: 1rem;
     left: 1rem;
