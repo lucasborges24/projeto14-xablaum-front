@@ -1,5 +1,7 @@
 import { useState } from "react"
+
 import { Input } from "../shared/Input"
+import { ButtonWhite, ButtonOrange } from "../shared/Button"
 
 function Login() {
 
@@ -30,6 +32,14 @@ function Login() {
             >
                 Senha
             </Input>
+            <ButtonWhite>
+                <ion-icon name="log-in-outline"></ion-icon>
+                <p> Entrar </p> 
+            </ButtonWhite>
+            <ButtonOrange width='472px'>
+                <ion-icon name="log-in-outline"></ion-icon>
+                <p> Entrar </p> 
+            </ButtonOrange>
         </>
     )
 }

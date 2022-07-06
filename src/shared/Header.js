@@ -29,7 +29,7 @@ function Header({
         <HeaderStyle>
             <Head>
                 <H1>
-                    <Link to='/'>XaBlauM!<span>>></span>  </Link>
+                    <Link to='/'>XaBlauM!<span> &#62;&#62;</span></Link>
                     
                 </H1>
                 <HeadRight>
