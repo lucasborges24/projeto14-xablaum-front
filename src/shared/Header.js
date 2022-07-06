@@ -18,7 +18,7 @@ function Header({
         } else {
             return (
                 <IconLogin>
-                    <ion-icon name="person-circle"></ion-icon>
+                    <Link to='/login'><ion-icon name="person-circle"></ion-icon></Link>
                     <H2>Faça seu <Link to='/login'>Login</Link> ou crie seu <Link to='/cadastro'>Cadastro</Link> </H2>
                 </IconLogin>
             )
@@ -52,6 +52,11 @@ const HeaderStyle = styled.header`
     height: 112px;
     box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
     background-color: #0060b1;
+
+    @media (max-width:  935px) {
+        height: auto;
+        padding: 10px 0;
+    }
 `
 
 const Head = styled.div`
@@ -105,6 +110,12 @@ const HeadRight = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @media (max-width:  935px) {
+        width: 30%
+    }
+    @media (max-width:  624px) {
+        width: 5rem;
+    }
 `
 
 const IconLogin = styled.div` 
@@ -135,6 +146,10 @@ const H2 = styled.h2`
 
     a:hover {
         text-decoration: underline;
+    }
+
+    @media (max-width:  624px) {
+        display: none;
     }
 `
 
