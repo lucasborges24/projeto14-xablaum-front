@@ -1,5 +1,6 @@
 import { useState } from "react"
 import styled from "styled-components"
+import { Link } from "react-router-dom"
 
 import { Input } from "../shared/Input"
 import { ButtonWhite, ButtonOrange } from "../shared/Button"
@@ -46,7 +47,9 @@ function Login() {
                     <p> Entrar </p>
                 </ButtonWhite>
             </Form>
-
+            <GoToSignUp to='/cadasatro'>
+                Não tem login? Cadastre-se agora!
+            </GoToSignUp>
         </>
     )
 }
@@ -89,10 +92,28 @@ const Form = styled.form`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding: 0 15px;
 
     button {
         margin: 20px 0;
     } 
+`
+
+const GoToSignUp = styled(Link)` 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    text-decoration: none;
+    color: rgb(255, 101, 0);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    :hover {
+        text-decoration: underline;
+    }
+    
 `
 
 export default Login
