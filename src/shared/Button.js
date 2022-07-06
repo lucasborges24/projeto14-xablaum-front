@@ -40,7 +40,8 @@ const ButtonOrangeStyle = styled.button`
     font-size: 18px;
     font-weight: 700;
     text-transform: uppercase;
-    transition: background-color 0.3s ease 0s;
+    transition: background-color 0.3s ease 0s,
+        border-width 0.1s ease;
     border-radius: 0.25rem;
     cursor: pointer;
     
@@ -52,6 +53,12 @@ const ButtonOrangeStyle = styled.button`
 
     :hover {
         background-color: #ff8b1f;
+    }
+
+    :focus {
+        border-width: 2px;
+        border-radius: 0.3rem;
+        outline: currentColor;
     }
 `
 
@@ -69,7 +76,8 @@ const ButtonWhiteStyle = styled.button`
     font-size: 18px;
     font-weight: 700;
     text-transform: uppercase;
-    transition: background-color 0.3s ease 0s;
+    transition: background-color 0.3s ease 0s,
+        border-width 0.1s ease;
     border-radius: 0.25rem;
     cursor: pointer;
 
@@ -81,6 +89,12 @@ const ButtonWhiteStyle = styled.button`
 
     :hover {
         color: #ff8b1f;
+    }
+
+    :focus {
+        border-width: 2px;
+        outline: currentColor;
+        border-radius: 0.35rem;
     }
 
 `
