@@ -29,7 +29,8 @@ function Header({
         <HeaderStyle>
             <Head>
                 <H1>
-                    <Link to='/'>XaBlauM!</Link>
+                    <Link to='/'>XaBlauM!<span>>></span>  </Link>
+                    
                 </H1>
                 <HeadRight>
                     <IconCart to='/cart'>
@@ -70,21 +71,33 @@ const Head = styled.div`
 
 const H1 = styled.h1` 
     font-family: 'Mansalva', cursive;
-    color: #0a437a;
-    background-color: rgba(255,255,255,0.7);
-    font-size: 36px;
+    color: #ffffff;
+    /* background-color: rgba(255,255,255,1); */
+    font-size: 45px;
     font-weight: bold;
-    border-radius: 5px;
+    border-radius: 20%;
+    /* border: 2px solid #ffffff; */
     cursor: pointer;
+    filter: saturate(15);
+    box-shadow: rgba(0, 0,0, 0.55) 0px 5px 15px;
+
+    span {
+        font-size: 25px;
+        color: #f05331;
+    }
 
     a {
         text-decoration: none;
-        color: #0a437a;
+        color: #ffffff;
     }
 
     @media (max-width:  935px) {
         font-size: 28px;
         margin-right: 15px;
+
+        span {
+            font-size: 20px;
+        }
     }
 `
 
