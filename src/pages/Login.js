@@ -47,8 +47,8 @@ function Login() {
                     <p> Entrar </p>
                 </ButtonWhite>
             </Form>
-            <GoToSignUp to='/cadasatro'>
-                Não tem login? Cadastre-se agora!
+            <GoToSignUp>
+                <Link to='/cadasatro'>Não tem login? Cadastre-se agora!</Link> 
             </GoToSignUp>
         </>
     )
@@ -99,7 +99,7 @@ const Form = styled.form`
     } 
 `
 
-const GoToSignUp = styled(Link)` 
+const GoToSignUp = styled.div` 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -109,10 +109,18 @@ const GoToSignUp = styled(Link)`
     font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
+    width: auto;
 
-    :hover {
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    a:hover {
         text-decoration: underline;
     }
+
+
     
 `
 
