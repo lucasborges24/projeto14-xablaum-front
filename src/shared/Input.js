@@ -35,6 +35,7 @@ const Form = styled.div`
     max-width: 472px;
     width: 100%; 
     height: 48px;
+    margin: 10px 0;
 `
 
 const InputStyle = styled.input` 
@@ -50,6 +51,7 @@ const InputStyle = styled.input`
     outline: none;
     padding: 10px;
     background: none;
+    
 
     :hover {
     }
