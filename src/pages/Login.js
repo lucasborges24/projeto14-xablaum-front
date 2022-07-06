@@ -73,6 +73,11 @@ const Title = styled.div`
         text-transform: uppercase;
         padding-left: 5px;
     }
+
+    @media (max-width: 614px) {
+        padding: 20px 15px 0 15px;
+        font-size: 15px;
+    }
 `
 
 const Text = styled.div` 
@@ -110,6 +115,7 @@ const GoToSignUp = styled.div`
     font-weight: 700;
     text-transform: uppercase;
     width: auto;
+    padding: 0 15px;
 
     a {
         text-decoration: none;
@@ -118,10 +124,7 @@ const GoToSignUp = styled.div`
 
     a:hover {
         text-decoration: underline;
-    }
-
-
-    
+    }   
 `
 
 export default Login
