@@ -12,6 +12,11 @@ function Login() {
         password: ''
     })
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log('a partir daq é só fazer a req')
+    }
+
     return (
         <>
             <Title>
@@ -21,14 +26,16 @@ function Login() {
             <Text>
                 <p>já tenho cadastro</p>
             </Text>
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <Input
                     type="email"
-                    placeholder=""
+                    placeholder="jaimecinto_bunito@gmail.com"
                     value={loginData.email}
                     functionOnChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
                     id='email'
-                    autocomplete="off"
+                    autocomplete=" autofocusoff"
+                    pattern='^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$'
+                    errorMessage={<p>Por favor, digite um email válido</p>}
                 >
                     Email
                 </Input>
@@ -89,7 +96,7 @@ const Text = styled.div`
     text-align: center;
     text-transform: uppercase;
     color: rgb(255, 101, 0);
-    font-size: 24px;
+    font-size: 2l4px;
 `
 
 const Form = styled.form` 
@@ -98,6 +105,7 @@ const Form = styled.form`
     align-items: center;
     flex-direction: column;
     padding: 0 15px;
+    /* height: 100%; */
 
     button {
         margin: 20px 0;
@@ -125,6 +133,10 @@ const GoToSignUp = styled.div`
     a:hover {
         text-decoration: underline;
     }   
+
+    a:focus {
+        outline: currentColor;
+    }
 `
 
 export default Login

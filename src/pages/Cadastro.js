@@ -14,6 +14,11 @@ function Cadastro() {
         confirmPassword: ''
     })
 
+    function handleSubmit(e) {
+        e.preventDefault()
+        console.log('a partir daq é só fazer a requisição')
+    } 
+
     return (
         <>
             <Title>
@@ -23,7 +28,7 @@ function Cadastro() {
             <Text>
                 <p>Quero me cadastrar</p>
             </Text>
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <Input
                     type="text"
                     placeholder="Jacinto Pena Galinha"
@@ -31,6 +36,8 @@ function Cadastro() {
                     functionOnChange={(e) => setCadastroData({ ...cadastroData, name: e.target.value })}
                     id='name'
                     autocomplete="off"
+                    pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$"
+                    errorMessage={<p>Por favor, digite um nome válido</p>}
                 >
                     Nome
                 </Input>
@@ -41,16 +48,20 @@ function Cadastro() {
                     functionOnChange={(e) => setCadastroData({ ...cadastroData, email: e.target.value })}
                     id='email'
                     autocomplete="off"
+                    pattern='^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$'
+                    errorMessage={<p>Por favor, digite um email válido</p>}
                 >
                     Email
                 </Input>
                 <Input
                     type="password"
-                    placeholder="senha_super_forte"
+                    placeholder="Senh4_Fort3"
                     value={cadastroData.password}
                     functionOnChange={(e) => setCadastroData({ ...cadastroData, password: e.target.value })}
                     id='senha'
                     autocomplete="off"
+                    pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&amp;*-]).{8,20}$"
+                    errorMessage={<p>Digite uma senha com 8 a 20 digitos com letras minúsculas, maiúsculas, números e caracter especial</p>}
                 >
                     Senha
                 </Input>
@@ -61,6 +72,8 @@ function Cadastro() {
                     functionOnChange={(e) => setCadastroData({ ...cadastroData, confirmPassword: e.target.value })}
                     id='confirm-senha'
                     autocomplete="off"
+                    pattern={cadastroData.password}
+                    errorMessage={<p>Senhas Diferentes</p>}
                 >
                     Confirme sua senha
                 </Input>
@@ -142,11 +155,16 @@ const GoToSignIn = styled.div`
     a {
         text-decoration: none;
         color: inherit;
+        margin-bottom: 20px;
     }
 
     a:hover {
         text-decoration: underline;
     }   
+
+    a:focus {
+        outline: currentColor;
+    }
 `
 
 export default Cadastro
