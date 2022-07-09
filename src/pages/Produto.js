@@ -32,19 +32,38 @@ function Produto() {
   };
 
   return (
-    <>
+    <Body>
         <Main></Main>
         <Description></Description>
-    </>
+    </Body>
   );
 }
 
 const Main = styled.main` 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff;
+    margin: 10px 15px;
+    height: 20px;
+`
 
+const Body = styled.div`
+    width: 100%;
+    height: 100vh;
+    background-color: #f2f3f4;
+    padding-top: 40px;
 `
 
 const Description = styled.div` 
-    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff;
+    margin: 10px 15px;
+    height: 20px;
 `
 
 export default Produto;
