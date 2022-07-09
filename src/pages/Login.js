@@ -21,6 +21,8 @@ function Login() {
     if (JSON.parse(localStorage.getItem("loginDataStoraged")) !== null) {
       navigate("/");
     }
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = (e) => {
