@@ -1,17 +1,21 @@
 import styled from "styled-components"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 
-function Header({
-    userToken
-}) {
 
-    console.log(userToken)
+function Header() {
+
+    const navigate = useNavigate();
+
+    function logout() {
+        localStorage.removeItem("loginDataStoraged")
+        navigate("/login")
+    }
 
     function createIconLogin() {
-        if (!userToken) {
+        if (JSON.parse(localStorage.getItem("loginDataStoraged"))) {
             return (
-                <IconLogout to='/login'>
+                <IconLogout onClick={logout}>
                     <ion-icon name="log-out"></ion-icon>
                 </IconLogout>
             )
@@ -167,7 +171,7 @@ const IconCart = styled(Link)`
     }
 `
 
-const IconLogout = styled(Link)` 
+const IconLogout = styled.div` 
     cursor: pointer;
 
     ion-icon {

@@ -14,10 +14,12 @@ function App() {
     <UserContext.Provider
       value={{
         URL,
+        userToken,
+        setUserToken
       }}
     >
       <BrowserRouter>
-        <Header userToken={userToken} />
+        <Header/>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<Cadastro />} />
