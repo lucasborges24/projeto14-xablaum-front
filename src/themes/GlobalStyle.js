@@ -8,7 +8,7 @@ ${reset}
     }
 
     body {
-        background-color: #011017;
+        background-color: #ffffff;
         font-family: 'Poppins', sans-serif;
     }
 `
