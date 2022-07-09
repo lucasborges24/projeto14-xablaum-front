@@ -197,10 +197,14 @@ const AddCart = styled.div`
   color: #ffffff;
   font-weight: 700;
   font-size: 18px;
-  padding: 13px;
+  /* padding: 13px; */
   border: 1px solid rgb(255, 101, 0);
   border-radius: 0.25rem;
   cursor: pointer;
+
+  ion-icon {
+    margin-right: 7px;
+  }
 
   @media (max-width: 420px) {
 
@@ -232,6 +236,7 @@ const DescriptionTitle = styled.div`
   ion-icon {
     color: rgb(255, 101, 0);
     font-size: 30px;
+    margin-right: 10px;
   }
 
   h2 {
