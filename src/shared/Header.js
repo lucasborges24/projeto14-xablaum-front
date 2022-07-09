@@ -114,11 +114,10 @@ const HeadRight = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    @media (max-width:  935px) {
-        width: 30%
-    }
+    min-width: 10%;
+
     @media (max-width:  624px) {
-        width: 5rem;
+        min-width: 5%;
     }
 `
 
