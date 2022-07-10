@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { ButtonOrange } from '../../shared/Button';
 
 export default function Product({ product }) {
-  const noPromo = product.oldPrice >= product.newPrice;
+  const noPromo = product.oldPrice <= product.newPrice;
 
   return (
     <Card>
@@ -25,9 +25,10 @@ export default function Product({ product }) {
 const Card = styled.div`
   background-color: white;
   box-shadow: rgba(40, 41, 61, 0.04) 0px 4px 8px;
-  width: 214px;
+  min-width: 214px;
   box-sizing: border-box;
   padding: 16px;
+  margin-right: 12px;
 
   :hover {
     box-shadow: rgba(96, 97, 112, 0.16) 0px 8px 16px;
@@ -48,8 +49,8 @@ const Card = styled.div`
 
 const Name = styled.div`
   font-size: 16px;
-  font-weight: 700;
-  color: gray;
+  font-weight: 600;
+  color: darkslategray;
   margin: 8px 0;
 `;
 

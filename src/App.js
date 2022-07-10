@@ -19,7 +19,7 @@ function App() {
       localStorage.setItem('token', '');
     }
   }, [userToken]);
-  const URL = 'https://xablaum.herokuapp.com';
+  const URL = 'http://localhost:5000';
 
   return (
     <UserContext.Provider

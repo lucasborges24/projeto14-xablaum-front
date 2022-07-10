@@ -7,13 +7,33 @@ import Product from './Product';
 
 export default function HomeScreen() {
   const [promoProducts, setPromoProducts] = useState([]);
+  const [mostPurchased, setMostPurchased] = useState([]);
+  const [mostViewed, setMostViewed] = useState([]);
   const { URL } = useContext(UserContext);
 
   useEffect(() => {
-    const promise = axios.get(URL + '/promo-products');
-    promise
+    const promoPromise = axios.get(URL + '/promo-products');
+    promoPromise
       .then((response) => {
         setPromoProducts(response.data);
+      })
+      .catch((error) => {
+        alert(error.response.text);
+      });
+
+    const purchasedPromise = axios.get(URL + '/purchased-products');
+    purchasedPromise
+      .then((response) => {
+        setMostPurchased(response.data);
+      })
+      .catch((error) => {
+        alert(error.response.text);
+      });
+
+    const viewedPromise = axios.get(URL + '/viewed-products');
+    viewedPromise
+      .then((response) => {
+        setMostViewed(response.data);
       })
       .catch((error) => {
         alert(error.response.text);
@@ -31,7 +51,19 @@ export default function HomeScreen() {
         <div>
           <Row>
             {promoProducts.map((prod) => (
-              <Product product={prod} />
+              <Product key={prod._id} product={prod} />
+            ))}
+          </Row>
+          <Title>Mais comprados</Title>
+          <Row>
+            {mostPurchased.map((prod) => (
+              <Product key={prod._id} product={prod} />
+            ))}
+          </Row>
+          <Title>Mais vistos</Title>
+          <Row>
+            {mostViewed.map((prod) => (
+              <Product key={prod._id} product={prod} />
             ))}
           </Row>
         </div>
@@ -69,6 +101,11 @@ const Products = styled.div`
 
 const Row = styled.div`
   display: flex;
-  overflow-x: hidden;
+  overflow-x: scroll;
   padding: 14px;
+`;
+
+const Title = styled.div`
+  color: black;
+  font-size: 20px;
 `;
