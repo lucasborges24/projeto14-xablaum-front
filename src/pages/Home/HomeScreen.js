@@ -18,25 +18,27 @@ export default function HomeScreen() {
         setPromoProducts(response.data);
       })
       .catch((error) => {
-        alert(error.response.text);
+        alert(error.response.data);
       });
 
     const purchasedPromise = axios.get(URL + '/purchased-products');
     purchasedPromise
       .then((response) => {
-        setMostPurchased(response.data);
+        const firstTen = response.data.slice(0, 10);
+        setMostPurchased(firstTen);
       })
       .catch((error) => {
-        alert(error.response.text);
+        alert(error.response.data);
       });
 
     const viewedPromise = axios.get(URL + '/viewed-products');
     viewedPromise
       .then((response) => {
-        setMostViewed(response.data);
+        const firstTen = response.data.slice(0, 10);
+        setMostViewed(firstTen);
       })
       .catch((error) => {
-        alert(error.response.text);
+        alert(error.response.data);
       });
   }, [URL]);
 
