@@ -18,7 +18,7 @@ function Login() {
   const [enableButton, setEnableButton] = useState(true);
 
   useEffect(() => {
-    if (userToken || userToken.length) {
+    if (userToken && userToken.length) {
       navigate('/');
     }
 
