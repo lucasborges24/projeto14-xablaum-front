@@ -35,7 +35,7 @@ function App() {
           <Route path="/" element={<HomeScreen />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<Cadastro />} />
-          <Route path="/produto" element={<Produto />} />
+          <Route path="/produto/:productId" element={<Produto />} />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>

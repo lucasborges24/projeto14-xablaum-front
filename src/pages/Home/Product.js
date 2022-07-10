@@ -1,24 +1,27 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
 import { ButtonOrange } from '../../shared/Button';
 
 export default function Product({ product }) {
   const noPromo = product.oldPrice <= product.newPrice;
+  const color = noPromo ? 'white' : 'lightgray';
 
   return (
-    <Card>
-      <img src={product.image} alt="Foto do produto" />
-      <Name>{product.name}</Name>
-      {noPromo ? (
-        <></>
-      ) : (
-        <OldPrice>{product.oldPrice.toFixed(2).replace('.', ',')}</OldPrice>
-      )}
-      <NewPrice>{product.newPrice.toFixed(2).replace('.', ',')}</NewPrice>
-      <ButtonOrange>
-        <ion-icon name="cart"></ion-icon>
-        Comprar
-      </ButtonOrange>
-    </Card>
+    <Link to={'/produto/' + product._id}>
+      <Card>
+        <img src={product.image} alt="Foto do produto" />
+        <Name>{product.name}</Name>
+        <OldPrice color={color}>
+          {product.oldPrice.toFixed(2).replace('.', ',')}
+        </OldPrice>
+        <NewPrice>{product.newPrice.toFixed(2).replace('.', ',')}</NewPrice>
+        <ButtonOrange>
+          <ion-icon name="cart"></ion-icon>
+          Comprar
+        </ButtonOrange>
+      </Card>
+    </Link>
   );
 }
 
@@ -55,7 +58,7 @@ const Name = styled.div`
 `;
 
 const OldPrice = styled.div`
-  color: lightgrey;
+  color: ${(props) => props.color};
   text-decoration: line-through;
   font-size: 12px;
   margin: 4px 0;

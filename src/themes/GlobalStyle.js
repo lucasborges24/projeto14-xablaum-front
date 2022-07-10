@@ -11,6 +11,11 @@ ${reset}
         background-color: #ffffff;
         font-family: 'Poppins', sans-serif;
     }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
 `;
 
 export default GlobalStyle;

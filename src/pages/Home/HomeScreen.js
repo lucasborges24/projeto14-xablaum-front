@@ -56,13 +56,13 @@ export default function HomeScreen() {
               <Product key={prod._id} product={prod} />
             ))}
           </Row>
-          <Title>Mais comprados</Title>
+          <Title>MAIS COMPRADOS</Title>
           <Row>
             {mostPurchased.map((prod) => (
               <Product key={prod._id} product={prod} />
             ))}
           </Row>
-          <Title>Mais vistos</Title>
+          <Title>MAIS VISTOS</Title>
           <Row>
             {mostViewed.map((prod) => (
               <Product key={prod._id} product={prod} />
@@ -108,6 +108,8 @@ const Row = styled.div`
 `;
 
 const Title = styled.div`
-  color: black;
+  color: darkslategray;
   font-size: 20px;
+  font-weight: 800;
+  margin: 50px 0;
 `;
