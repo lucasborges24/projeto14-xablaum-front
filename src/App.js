@@ -5,7 +5,7 @@ import LoginScreen from './pages/LoginScreen';
 import SignupScreen from './pages/SignupScreen';
 import HomeScreen from './pages/Home/HomeScreen';
 import ProductScreen from './pages/ProductScreen';
-import CheckoutScreen from './pages/CheckoutScreen';
+import CheckoutScreen from './pages/Checkout/CheckoutScreen';
 import CartScreen from './pages/Cart/CartScreen';
 
 import UserContext from './contexts/UserContext';
