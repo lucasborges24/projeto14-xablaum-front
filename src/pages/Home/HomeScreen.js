@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
+
 import UserContext from '../../contexts/UserContext';
 
 import Product from './Product';
