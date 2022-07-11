@@ -5,6 +5,7 @@ import LoginScreen from './pages/LoginScreen';
 import SignupScreen from './pages/SignupScreen';
 import HomeScreen from './pages/Home/HomeScreen';
 import ProductScreen from './pages/ProductScreen';
+import CheckoutScreen from './pages/CheckoutScreen'
 
 import UserContext from './contexts/UserContext';
 
@@ -36,6 +37,7 @@ function App() {
           <Route path="/login" element={<LoginScreen />} />
           <Route path="/cadastro" element={<SignupScreen />} />
           <Route path="/produto/:productId" element={<ProductScreen />} />
+          <Route path='/checkout' element={<CheckoutScreen />} />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>
