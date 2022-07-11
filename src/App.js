@@ -1,28 +1,41 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-import Login from "./pages/Login";
-import Cadastro from "./pages/Cadastro";
-import Header from "./shared/Header";
-import UserContext from "./contexts/UserContext";
+import LoginScreen from './pages/LoginScreen';
+import SignupScreen from './pages/SignupScreen';
+import HomeScreen from './pages/Home/HomeScreen';
+import ProductScreen from './pages/ProductScreen';
+
+import UserContext from './contexts/UserContext';
+
+import Header from './shared/Header';
 
 function App() {
-  const [userToken, setUserToken] = useState({});
-  const URL = "https://xablaum.herokuapp.com";
+  const [userToken, setUserToken] = useState(localStorage.getItem('token'));
+  useEffect(() => {
+    if (userToken) {
+      localStorage.setItem('token', userToken);
+    } else {
+      localStorage.setItem('token', '');
+    }
+  }, [userToken]);
+  const URL = 'https://xablaum.herokuapp.com';
 
   return (
     <UserContext.Provider
       value={{
         URL,
         userToken,
-        setUserToken
+        setUserToken,
       }}
     >
       <BrowserRouter>
-        <Header/>
+        <Header />
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/cadastro" element={<Cadastro />} />
+          <Route path="/" element={<HomeScreen />} />
+          <Route path="/login" element={<LoginScreen />} />
+          <Route path="/cadastro" element={<SignupScreen />} />
+          <Route path="/produto/:productId" element={<ProductScreen />} />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>

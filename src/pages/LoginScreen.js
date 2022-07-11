@@ -1,27 +1,27 @@
-import { useState, useContext, useEffect } from "react";
-import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
-import { Oval } from "react-loader-spinner";
-import axios from "axios";
+import { useState, useContext, useEffect } from 'react';
+import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import { Oval } from 'react-loader-spinner';
+import axios from 'axios';
 
-import { Input } from "../shared/Input";
-import { ButtonWhite } from "../shared/Button";
-import UserContext from "../contexts/UserContext";
+import { Input } from '../shared/Input';
+import { ButtonWhite } from '../shared/Button';
+import UserContext from '../contexts/UserContext';
 
-function Login() {
-  const { URL, setUserToken } = useContext(UserContext);
+export default function LoginScreen() {
+  const { URL, setUserToken, userToken } = useContext(UserContext);
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
   const [enableButton, setEnableButton] = useState(true);
 
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("loginDataStoraged")) !== null) {
-      navigate("/");
+    if (userToken && userToken.length) {
+      navigate('/');
     }
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -35,16 +35,12 @@ function Login() {
       email: loginData.email,
       password: loginData.password,
     };
-    const response = axios.post(`${URL}/login`, dataLogin);
+    const promise = axios.post(`${URL}/login`, dataLogin);
 
-    response
+    promise
       .then(({ data }) => {
-        setUserToken({ token: data });
-        localStorage.setItem(
-          "loginDataStoraged",
-          JSON.stringify({ token: data })
-        );
-        navigate("/");
+        setUserToken(data);
+        navigate('/');
       })
       .catch((err) => {
         alert(
@@ -192,5 +188,3 @@ const GoToSignUp = styled.div`
     outline: currentColor;
   }
 `;
-
-export default Login;
