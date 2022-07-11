@@ -105,7 +105,7 @@ export default function CartScreen() {
             <ResumoTotal>
               <h4>R$&nbsp;{total.toFixed(2).replace('.', ',')}</h4>
             </ResumoTotal>
-            <ButtonOrange>Ir para o pagamento</ButtonOrange>
+            <ButtonOrange><Link to='/checkout'>Ir para o pagamento</Link></ButtonOrange>
             <ButtonWhite ><Link to='/'>Voltar</Link></ButtonWhite>
           </ResumoBody>
         </Resumo>

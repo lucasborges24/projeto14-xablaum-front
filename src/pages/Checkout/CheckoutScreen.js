@@ -46,6 +46,33 @@ export default function CheckoutScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  function finishOrder() {
+    if (userToken) {
+      const config = {
+        headers: {
+          "Authorization": `Bearer ${userToken}`,
+        },
+      };
+      console.log(config)
+      const promise = axios.delete(URL + '/checkout', config, {});
+      promise
+        .then(() => {
+          alert('Compra realizada. Daqui a pouquinho ta aí rsrs');
+          navigate('/')
+        })
+        .catch((error) => {
+          console.log(error.message)
+          alert(error.response.data);
+          if (error.response.status === 401) {
+            setUserToken('');
+            navigate('/login');
+          }
+        });
+    } else {
+      navigate('/login')
+    }
+  }
+
   return (
     <CheckoutBody>
       <CheckoutStyle>
@@ -75,8 +102,8 @@ export default function CheckoutScreen() {
                 <h2>Lista de produtos</h2>
               </Icon>
 
-              {products.map((i) => (
-                <ProductResume productInfo={i} />
+              {products.map((i, ind) => (
+                <ProductResume productInfo={i} key={ind}/>
               ))}
             </ProductsBox>
           </ProductsInfo>
@@ -101,7 +128,7 @@ export default function CheckoutScreen() {
             <ResumoTotal>
               <h4>R$&nbsp;{total.toFixed(2).replace('.', ',')}</h4>
             </ResumoTotal>
-            <ButtonOrange>Finalizar</ButtonOrange>
+            <ButtonOrange><span onClick={() => finishOrder()}>Finalizar</span></ButtonOrange>
             <ButtonWhite><Link to='/cart'>Voltar</Link></ButtonWhite>
           </ResumoBody>
         </Resumo>
