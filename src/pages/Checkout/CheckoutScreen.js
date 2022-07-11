@@ -40,6 +40,8 @@ export default function CheckoutScreen() {
             navigate('/login');
           }
         });
+    } else {
+      navigate('/login');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -73,7 +75,7 @@ export default function CheckoutScreen() {
                 <h2>Lista de produtos</h2>
               </Icon>
 
-              {products.product.map((i) => (
+              {products.map((i) => (
                 <ProductResume productInfo={i} />
               ))}
             </ProductsBox>
@@ -89,7 +91,7 @@ export default function CheckoutScreen() {
             </ResumoTitle>
             <ResumoDescription>
               <p>Valor dos Produtos:</p>
-              <h4>R$&nbsp;{total().toFixed(2).replace('.', ',')}</h4>
+              <h4>R$&nbsp;{total.toFixed(2).replace('.', ',')}</h4>
             </ResumoDescription>
             <Border></Border>
             <ResumoDescription>
@@ -97,7 +99,7 @@ export default function CheckoutScreen() {
               <h4>R$&nbsp;0,00</h4>
             </ResumoDescription>
             <ResumoTotal>
-              <h4>R$&nbsp;{total().toFixed(2).replace('.', ',')}</h4>
+              <h4>R$&nbsp;{total.toFixed(2).replace('.', ',')}</h4>
             </ResumoTotal>
             <ButtonOrange>Finalizar</ButtonOrange>
             <ButtonWhite onClick={navigate('/cart')}>Voltar</ButtonWhite>
