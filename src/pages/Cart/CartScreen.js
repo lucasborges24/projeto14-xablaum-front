@@ -20,7 +20,7 @@ export default function CartScreen() {
     setTotal(sum);
   }, [products]);
   const navigate = useNavigate();
-  const { URL, userToken } = useContext(UserContext);
+  const { URL, userToken, setUserToken } = useContext(UserContext);
   useEffect(() => {
     if (userToken) {
       const config = {
@@ -36,6 +36,7 @@ export default function CartScreen() {
         .catch((error) => {
           alert(error.response.data);
           if (error.response.status === 401) {
+            setUserToken('');
             navigate('/login');
           }
         });
