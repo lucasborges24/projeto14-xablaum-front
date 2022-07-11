@@ -17,6 +17,7 @@ export default function ProductScreen() {
       .then((response) => {
         setIsLoading(false);
         setProduct(response.data);
+        axios.post(`${URL}/product/${productId}`);
       })
       .catch((error) => {
         setIsLoading(false);
