@@ -1,38 +1,48 @@
+import axios from 'axios';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState, useContext } from 'react';
 
 import { ButtonWhite, ButtonOrange } from '../../shared/Button';
 
+import UserContext from '../../contexts/UserContext';
+
+import ProductResume from './ProductResume';
+
 export default function CheckoutScreen() {
-  const products = {
-    product: [
-      {
-        name: 'monitor foda',
-        newPrice: 1000.5,
-        image:
-          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages5.memedroid.com%2Fimages%2FUPLOADED10%2F50ca6ce737cc4.png&f=1&nofb=1',
-        qtd: 2,
-      },
-      {
-        name: 'mouse gamer foda',
-        newPrice: 230,
-        image:
-          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.extra-imagens.com.br%2FInformatica%2FAcessoriosePerifericos%2FMouses%2F6033608%2F283191085%2FMouse-Optico-Multilaser-Classic-MO179-Preto-6033608.jpg&f=1&nofb=1',
-        qtd: 3,
-      },
-    ],
-  };
-
-  const navigate = useNavigate();
-
-  function total() {
+  const [products, setProducts] = useState([]);
+  const [total, setTotal] = useState(0);
+  useEffect(() => {
     let sum = 0;
-    for (let i = 0; i < products.product.length; i++) {
-      sum += products.product[i].newPrice;
+    for (const product of products) {
+      sum += product.newPrice * product.qtd;
     }
-    console.log(sum);
-    return sum;
-  }
+    setTotal(sum);
+  }, [products]);
+  const navigate = useNavigate();
+  const { URL, userToken, setUserToken } = useContext(UserContext);
+  useEffect(() => {
+    if (userToken) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      };
+      const promise = axios.get(URL + '/cart', config);
+      promise
+        .then((response) => {
+          setProducts(response.data.products);
+        })
+        .catch((error) => {
+          alert(error.response.data);
+          if (error.response.status === 401) {
+            setUserToken('');
+            navigate('/login');
+          }
+        });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <CheckoutBody>
@@ -64,25 +74,7 @@ export default function CheckoutScreen() {
               </Icon>
 
               {products.product.map((i) => (
-                <>
-                  <Product>
-                    <ProductLeft>
-                      <img src={i.image} alt="foto top compre meu produto" />
-                      <p>{i.name}</p>
-                    </ProductLeft>
-                    <ProductRight>
-                      <Qtd>
-                        <h2>Quant:</h2>
-                        <p>{i.qtd}</p>
-                      </Qtd>
-                      <Price>
-                        <h2>Preço:</h2>
-                        <p>R$&nbsp;{i.newPrice.toFixed(2).replace('.', ',')}</p>
-                      </Price>
-                    </ProductRight>
-                  </Product>
-                  <Border></Border>
-                </>
+                <ProductResume productInfo={i} />
               ))}
             </ProductsBox>
           </ProductsInfo>
@@ -220,85 +212,6 @@ const ProductsBox = styled.div`
   align-items: flex-end;
   padding: 2rem;
   border-radius: 0.25rem;
-`;
-
-const Product = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  margin-top: 50px;
-`;
-
-const ProductLeft = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-
-  img {
-    object-fit: contain;
-    width: 88px;
-    height: 88px;
-    margin: auto;
-  }
-
-  p {
-    padding: 1rem;
-    font-size: 0.875rem;
-    line-height: 1.125rem;
-    font-weight: 700;
-    overflow: hidden;
-    max-height: 3.375rem;
-    color: rgb(66, 70, 77);
-  }
-`;
-
-const ProductRight = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const Qtd = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0 2rem;
-
-  h2 {
-    margin-top: -2rem;
-    margin-bottom: 1.5rem;
-    font-size: 0.75rem;
-    line-height: 1.125rem;
-    font-weight: 400;
-    color: rgb(66, 70, 77);
-  }
-`;
-
-const Price = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0 2rem;
-
-  h2 {
-    margin-top: -2rem;
-    margin-bottom: 1.5rem;
-    font-size: 0.75rem;
-    line-height: 1.125rem;
-    font-weight: 400;
-    color: rgb(66, 70, 77);
-  }
-
-  p {
-    font-size: 1rem;
-    line-height: 1rem;
-    font-weight: 700;
-    color: rgb(252, 107, 15);
-    text-align: right;
-  }
 `;
 
 const Resumo = styled.aside`
