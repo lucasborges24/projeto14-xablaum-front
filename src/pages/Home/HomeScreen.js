@@ -25,7 +25,7 @@ export default function HomeScreen() {
     const purchasedPromise = axios.get(URL + '/purchased-products');
     purchasedPromise
       .then((response) => {
-        const firstTen = response.data.slice(0, 10);
+        const firstTen = response.data.slice(-10).reverse();
         setMostPurchased(firstTen);
       })
       .catch((error) => {
@@ -35,7 +35,7 @@ export default function HomeScreen() {
     const viewedPromise = axios.get(URL + '/viewed-products');
     viewedPromise
       .then((response) => {
-        const firstTen = response.data.slice(0, 10);
+        const firstTen = response.data.slice(-10).reverse();
         setMostViewed(firstTen);
       })
       .catch((error) => {

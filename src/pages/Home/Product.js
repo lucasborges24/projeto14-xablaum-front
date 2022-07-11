@@ -13,11 +13,11 @@ export default function Product({ product }) {
   const { URL } = useContext(UserContext)
   const updateViews = (id) => {
     console.log(`${URL}/${id}`);
-    const promise = axios.post(`${URL}/${id}`)
+    const promise = axios.post(`${URL}/product/${id}`)
 
     promise
-    .then(() => console.log('deu bao'))
-    .catch((err) => console.log(err))
+    .then(() => console.log('contador está em: ' + product.views))
+    .catch((err) => console.log(err.message))
   }
 
   return (
