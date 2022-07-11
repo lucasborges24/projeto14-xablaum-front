@@ -1,36 +1,36 @@
-import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
-import { ButtonWhite, ButtonOrange } from "../shared/Button";
+import { ButtonWhite, ButtonOrange } from '../../shared/Button';
 
 export default function CheckoutScreen() {
   const products = {
     product: [
       {
-        name: "monitor foda",
+        name: 'monitor foda',
         newPrice: 1000.5,
         image:
-          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages5.memedroid.com%2Fimages%2FUPLOADED10%2F50ca6ce737cc4.png&f=1&nofb=1",
+          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages5.memedroid.com%2Fimages%2FUPLOADED10%2F50ca6ce737cc4.png&f=1&nofb=1',
         qtd: 2,
       },
       {
-        name: "mouse gamer foda",
+        name: 'mouse gamer foda',
         newPrice: 230,
         image:
-          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.extra-imagens.com.br%2FInformatica%2FAcessoriosePerifericos%2FMouses%2F6033608%2F283191085%2FMouse-Optico-Multilaser-Classic-MO179-Preto-6033608.jpg&f=1&nofb=1",
+          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.extra-imagens.com.br%2FInformatica%2FAcessoriosePerifericos%2FMouses%2F6033608%2F283191085%2FMouse-Optico-Multilaser-Classic-MO179-Preto-6033608.jpg&f=1&nofb=1',
         qtd: 3,
       },
     ],
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function total() {
     let sum = 0;
-    for (let i = 0; i < products.product.length; i ++) {
-        sum += products.product[i].newPrice
+    for (let i = 0; i < products.product.length; i++) {
+      sum += products.product[i].newPrice;
     }
-    console.log(sum)
+    console.log(sum);
     return sum;
   }
 
@@ -63,14 +63,11 @@ export default function CheckoutScreen() {
                 <h2>Lista de produtos</h2>
               </Icon>
 
-              {products.product.map((i) => 
+              {products.product.map((i) => (
                 <>
                   <Product>
                     <ProductLeft>
-                      <img
-                        src={i.image}
-                        alt="foto top compre meu produto"
-                      />
+                      <img src={i.image} alt="foto top compre meu produto" />
                       <p>{i.name}</p>
                     </ProductLeft>
                     <ProductRight>
@@ -80,13 +77,13 @@ export default function CheckoutScreen() {
                       </Qtd>
                       <Price>
                         <h2>Preço:</h2>
-                        <p>R$&nbsp;{i.newPrice.toFixed(2).replace('.',',')}</p>
+                        <p>R$&nbsp;{i.newPrice.toFixed(2).replace('.', ',')}</p>
                       </Price>
                     </ProductRight>
                   </Product>
                   <Border></Border>
                 </>
-              )}
+              ))}
             </ProductsBox>
           </ProductsInfo>
         </Info>
@@ -100,7 +97,7 @@ export default function CheckoutScreen() {
             </ResumoTitle>
             <ResumoDescription>
               <p>Valor dos Produtos:</p>
-              <h4>R$&nbsp;{total().toFixed(2).replace('.',',')}</h4>
+              <h4>R$&nbsp;{total().toFixed(2).replace('.', ',')}</h4>
             </ResumoDescription>
             <Border></Border>
             <ResumoDescription>
@@ -108,7 +105,7 @@ export default function CheckoutScreen() {
               <h4>R$&nbsp;0,00</h4>
             </ResumoDescription>
             <ResumoTotal>
-              <h4>R$&nbsp;{total().toFixed(2).replace('.',',')}</h4>
+              <h4>R$&nbsp;{total().toFixed(2).replace('.', ',')}</h4>
             </ResumoTotal>
             <ButtonOrange>Finalizar</ButtonOrange>
             <ButtonWhite onClick={navigate('/cart')}>Voltar</ButtonWhite>
@@ -122,7 +119,7 @@ export default function CheckoutScreen() {
 const CheckoutBody = styled.div`
   width: 100%;
   min-height: 100vh;
-    height: 100%;
+  height: 100%;
   background-color: #f2f3f4;
 `;
 

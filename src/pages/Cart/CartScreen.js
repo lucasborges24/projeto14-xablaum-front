@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 
 import { ButtonWhite, ButtonOrange } from '../../shared/Button';
 
-import Product from './Product';
+import Product from './ProductCart';
 
 import UserContext from '../../contexts/UserContext';
 
