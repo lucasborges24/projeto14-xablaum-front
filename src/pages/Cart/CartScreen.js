@@ -1,6 +1,6 @@
 import axios from 'axios';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 
 import { ButtonWhite, ButtonOrange } from '../../shared/Button';
@@ -10,6 +10,7 @@ import Product from './ProductCart';
 import UserContext from '../../contexts/UserContext';
 
 export default function CartScreen() {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
   useEffect(() => {
@@ -19,7 +20,6 @@ export default function CartScreen() {
     }
     setTotal(sum);
   }, [products]);
-  const navigate = useNavigate();
   const { URL, userToken, setUserToken } = useContext(UserContext);
   useEffect(() => {
     if (userToken) {
@@ -106,7 +106,7 @@ export default function CartScreen() {
               <h4>R$&nbsp;{total.toFixed(2).replace('.', ',')}</h4>
             </ResumoTotal>
             <ButtonOrange>Ir para o pagamento</ButtonOrange>
-            <ButtonWhite onClick={() => navigate('/')}>Voltar</ButtonWhite>
+            <ButtonWhite ><Link to='/'>Voltar</Link></ButtonWhite>
           </ResumoBody>
         </Resumo>
       </CheckoutStyle>
