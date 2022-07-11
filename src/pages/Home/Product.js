@@ -1,15 +1,28 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useContext } from 'react';
+import axios from 'axios';
 
+import UserContext from '../../contexts/UserContext';
 import { ButtonOrange } from '../../shared/Button';
 
 export default function Product({ product }) {
   const noPromo = product.oldPrice <= product.newPrice;
   const color = noPromo ? 'white' : 'lightgray';
 
+  const { URL } = useContext(UserContext)
+  const updateViews = (id) => {
+    console.log(`${URL}/${id}`);
+    const promise = axios.post(`${URL}/${id}`)
+
+    promise
+    .then(() => console.log('deu bao'))
+    .catch((err) => console.log(err))
+  }
+
   return (
     <Link to={'/produto/' + product._id}>
-      <Card>
+      <Card onClick={() => updateViews(product._id)}>
         <img src={product.image} alt="Foto do produto" />
         <Name>{product.name}</Name>
         <OldPrice color={color}>
