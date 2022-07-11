@@ -8,7 +8,7 @@ import UserContext from '../contexts/UserContext';
 export default function ProductScreen() {
   const [product, setProduct] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const { URL } = useContext(UserContext);
+  const { URL, userToken } = useContext(UserContext);
   const { productId } = useParams();
 
   useEffect(() => {
@@ -26,6 +26,31 @@ export default function ProductScreen() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  function addToCart() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    };
+    const body = {
+      name: product.name,
+      oldPrice: product.oldPrice,
+      newPrice: product.newPrice,
+      image: product.image,
+      description: product.description,
+    };
+    const promise = axios.post(URL + '/cart', body, config);
+    promise
+      .then((response) => {
+        alert(
+          'Adicionado ao carrinho, clique no carrinho para ver suas compras!'
+        );
+      })
+      .catch((error) => {
+        alert(error.response.data);
+      });
+  }
 
   return (
     <Body>
@@ -45,7 +70,7 @@ export default function ProductScreen() {
                 {isLoading ? '' : product.newPrice.toFixed(2).replace('.', ',')}
               </h3>
             </Price>
-            <AddCart>
+            <AddCart onClick={addToCart}>
               <ion-icon name="cart"></ion-icon>
               <p>Comprar</p>
             </AddCart>
