@@ -1,6 +1,6 @@
 import axios from 'axios';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
 
 import { ButtonWhite, ButtonOrange } from '../../shared/Button';
@@ -100,7 +100,7 @@ export default function CheckoutScreen() {
               <h4>R$&nbsp;{total().toFixed(2).replace('.', ',')}</h4>
             </ResumoTotal>
             <ButtonOrange>Finalizar</ButtonOrange>
-            <ButtonWhite onClick={navigate('/cart')}>Voltar</ButtonWhite>
+            <ButtonWhite><Link to='/cart'>Voltar</Link></ButtonWhite>
           </ResumoBody>
         </Resumo>
       </CheckoutStyle>
