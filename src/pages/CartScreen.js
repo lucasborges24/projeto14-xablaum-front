@@ -1,41 +1,45 @@
-import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import axios from 'axios';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
 
-import { ButtonWhite, ButtonOrange } from "../shared/Button";
+import { ButtonWhite, ButtonOrange } from '../shared/Button';
+
+import UserContext from '../contexts/UserContext';
 
 export default function CartScreen() {
-  const products = {
-    product: [
-      {
-        name: "monitor foda",
-        newPrice: 1000.5,
-        image:
-          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages5.memedroid.com%2Fimages%2FUPLOADED10%2F50ca6ce737cc4.png&f=1&nofb=1",
-        qtd: 2,
-      },
-      {
-        name: "mouse gamer foda",
-        newPrice: 230,
-        image:
-          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.extra-imagens.com.br%2FInformatica%2FAcessoriosePerifericos%2FMouses%2F6033608%2F283191085%2FMouse-Optico-Multilaser-Classic-MO179-Preto-6033608.jpg&f=1&nofb=1",
-        qtd: 3,
-      },
-    ],
-  };
-
-  const navigate = useNavigate()
-  const [cartValues, setCartValues] = useState(products.product.map((i, ind) => i.qtd))
-  console.log(cartValues)
-  function total() {
+  const [products, setProducts] = useState([]);
+  const [total, setTotal] = useState(0);
+  useEffect(() => {
     let sum = 0;
-    for (let i = 0; i < products.product.length; i ++) {
-        sum += products.product[i].newPrice
+    for (const product of products) {
+      sum += product.newPrice * product.qtd;
     }
-    return sum;
-  }
-
-  
+    setTotal(sum);
+  }, [products]);
+  const navigate = useNavigate();
+  const { URL, userToken } = useContext(UserContext);
+  useEffect(() => {
+    if (userToken) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      };
+      const promise = axios.get(URL + '/cart', config);
+      promise
+        .then((response) => {
+          setProducts(response.data.products);
+        })
+        .catch((error) => {
+          alert(error.response.data);
+          if (error.response.status === 401) {
+            navigate('/login');
+          }
+        });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <CheckoutBody>
@@ -66,35 +70,15 @@ export default function CartScreen() {
                 <h2>Lista de produtos</h2>
               </Icon>
 
-              {products.product.map((i, ind) => 
-                <>
-                  <Product key={ind}>
-                    <ProductLeft>
-                      <img
-                        src={i.image}
-                        alt="foto top compre meu produto"
-                      />
-                      <p>{i.name}</p>
-                    </ProductLeft>
-                    <ProductRight>
-                      <Qtd>
-                        <h2>Quant:</h2>
-                        <input type="number" step='0' value={cartValues[ind]} onChange={(e) => setCartValues(cartValues.map((ind2, ind3) => {
-                            if (ind === ind3) {
-                                ind2 = Number(e.target.value)
-                            }
-                            return ind2;
-                        }))}/>
-                      </Qtd>
-                      <Price>
-                        <h2>Preço:</h2>
-                        <p>R$&nbsp;{i.newPrice.toFixed(2).replace('.',',')}</p>
-                      </Price>
-                    </ProductRight>
-                  </Product>
-                  <Border></Border>
-                </>
-              )}
+              {products.map((i, ind) => (
+                <Product
+                  key={i._id}
+                  productInfo={i}
+                  index={ind}
+                  products={products}
+                  setProducts={setProducts}
+                />
+              ))}
             </ProductsBox>
           </ProductsInfo>
         </Info>
@@ -108,7 +92,7 @@ export default function CartScreen() {
             </ResumoTitle>
             <ResumoDescription>
               <p>Valor dos Produtos:</p>
-              <h4>R$&nbsp;{total().toFixed(2).replace('.',',')}</h4>
+              <h4>R$&nbsp;{total.toFixed(2).replace('.', ',')}</h4>
             </ResumoDescription>
             <Border></Border>
             <ResumoDescription>
@@ -116,10 +100,10 @@ export default function CartScreen() {
               <h4>R$&nbsp;0,00</h4>
             </ResumoDescription>
             <ResumoTotal>
-              <h4>R$&nbsp;{total().toFixed(2).replace('.',',')}</h4>
+              <h4>R$&nbsp;{total.toFixed(2).replace('.', ',')}</h4>
             </ResumoTotal>
             <ButtonOrange>Ir para o pagamento</ButtonOrange>
-            <ButtonWhite onClick={navigate('/')}>Voltar</ButtonWhite>
+            <ButtonWhite onClick={() => navigate('/')}>Voltar</ButtonWhite>
           </ResumoBody>
         </Resumo>
       </CheckoutStyle>
@@ -127,10 +111,47 @@ export default function CartScreen() {
   );
 }
 
+function Product({ productInfo, products, setProducts, index }) {
+  const [quantity, setQuantity] = useState(productInfo.qtd);
+  useEffect(() => {
+    const updatedProduts = [...products];
+    updatedProduts[index].qtd = quantity;
+    setProducts(updatedProduts);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quantity]);
+
+  return (
+    <>
+      <ProductPart>
+        <ProductLeft>
+          <img src={productInfo.image} alt="foto top compre meu produto" />
+          <p>{productInfo.name}</p>
+        </ProductLeft>
+        <ProductRight>
+          <Qtd>
+            <h2>Quant:</h2>
+            <input
+              type="number"
+              step="1"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+            />
+          </Qtd>
+          <Price>
+            <h2>Preço:</h2>
+            <p>R$&nbsp;{productInfo.newPrice.toFixed(2).replace('.', ',')}</p>
+          </Price>
+        </ProductRight>
+      </ProductPart>
+      <Border></Border>
+    </>
+  );
+}
+
 const CheckoutBody = styled.div`
   width: 100%;
   min-height: 100vh;
-    height: 100%;
+  height: 100%;
   background-color: #f2f3f4;
 `;
 
@@ -233,7 +254,7 @@ const ProductsBox = styled.div`
   border-radius: 0.25rem;
 `;
 
-const Product = styled.div`
+const ProductPart = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -297,7 +318,7 @@ const Qtd = styled.div`
     min-width: 1.5rem;
     border: none;
     font-size: 14px;
-    font-family: Poppins, sans-serif
+    font-family: Poppins, sans-serif;
   }
 
   input:focus {
@@ -306,7 +327,6 @@ const Qtd = styled.div`
     outline: none;
     border-color: #ffffff;
   }
-
 `;
 
 const Price = styled.div`
