@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import UserContext from '../../contexts/UserContext';
 
-import Product from './Product';
+import Product from './ProductCard';
 
 export default function HomeScreen() {
   const [promoProducts, setPromoProducts] = useState([]);

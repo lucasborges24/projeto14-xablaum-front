@@ -5,6 +5,8 @@ import LoginScreen from './pages/LoginScreen';
 import SignupScreen from './pages/SignupScreen';
 import HomeScreen from './pages/Home/HomeScreen';
 import ProductScreen from './pages/ProductScreen';
+import CheckoutScreen from './pages/Checkout/CheckoutScreen';
+import CartScreen from './pages/Cart/CartScreen';
 
 import UserContext from './contexts/UserContext';
 
@@ -19,7 +21,7 @@ function App() {
       localStorage.setItem('token', '');
     }
   }, [userToken]);
-  const URL = 'https://xablaum.herokuapp.com';
+  const URL = 'http://localhost:5000';
 
   return (
     <UserContext.Provider
@@ -36,6 +38,8 @@ function App() {
           <Route path="/login" element={<LoginScreen />} />
           <Route path="/cadastro" element={<SignupScreen />} />
           <Route path="/produto/:productId" element={<ProductScreen />} />
+          <Route path="/checkout" element={<CheckoutScreen />} />
+          <Route path="/cart" element={<CartScreen />} />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>
