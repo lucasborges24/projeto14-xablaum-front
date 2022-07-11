@@ -1,48 +1,48 @@
-import styled from "styled-components";
+import axios from 'axios';
+import { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
 
-function Produto() {
-  const product = {
-    name: "Monitor Brazilpc 21.5 LED Full HD, 75Hz, HDMI/VGA, VESA, Preto - 22W-75KAN",
-    oldPrice: 888.78,
-    newPrice: 699.9,
-    image:
-      "https://images.kabum.com.br/produtos/fotos/328743/monitor-brazilpc-21-5-led-full-hd-75hz-hdmi-vga-vesa-preto-22w-75kan_1650400898_gg.jpg",
-    description: [
-      {
-        title: "VESA 100x100",
-        text: "O Monitor conta com VESA que é um padrão de quatro furos localizado na parte traseira das TVs e Monitores. Esse padrão VESA determina a compatibilidade entre a TV e o suporte de fixação.",
-      },
-      {
-        title: "Resolução Full HD",
-        text: "Full HD, também conhecido como 1080p ou FHD (alta definição total), é uma resolução de tela muito comum de 1920 x 1080 pixels. Esse monitor passa exibe uma imagem de 1080i e 1080p e mapear os pixels 1: 1 sem a necessidade de redefinir a amostra do conteúdo de vídeo para exibir na tela.",
-      },
-      {
-        title: "Operacional",
-        text: "Esse Monitor traz conexão Bivolt garantindo que você possa utilizar em qualquer lugar. Ele também traz tecnologia de conexão VGA e HDMI, suportando diferentes tipos de de compatibilidade para você.",
-      },
-      {
-        title: "Tecnologia de Tela",
-        text: "O monitor 22W-75KAN da Brazil PC conta com tecnologia de painel TN que garante rápido tempo de resposta, traz também um display que possui 16.7 Milhões de cores para maior fidelidade de cores para suas atividades do dia-a-dia como Netflix, trabalhos de faculdade e para seu Home Office.",
-      },
-      {
-        title: "Garanta já o seu Monitor Brazil PC de 21.5 LED no KaBuM!",
-        text: "",
-      },
-    ],
-  };
+import UserContext from '../contexts/UserContext';
+
+export default function ProductScreen() {
+  const [product, setProduct] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const { URL } = useContext(UserContext);
+  const { productId } = useParams();
+
+  useEffect(() => {
+    const promise = axios.get(`${URL}/product/${productId}`);
+    promise
+      .then((response) => {
+        setIsLoading(false);
+        setProduct(response.data);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        alert(error.response.data);
+      });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Body>
       <Main>
-        <H2>{product.name}</H2>
+        <H2>{isLoading ? '' : product.name}</H2>
         <MainBody>
           <Img>
-            <img src={product.image} alt="produto" />
+            {isLoading ? <></> : <img src={product.image} alt="produto" />}
           </Img>
           <Content>
             <Price>
-              <h4>{product.oldPrice}</h4>
-              <h3>R${product.newPrice.toFixed(2).replace(".", ",")}</h3>
+              <h4>
+                {isLoading ? '' : product.oldPrice.toFixed(2).replace('.', ',')}
+              </h4>
+              <h3>
+                R$
+                {isLoading ? '' : product.newPrice.toFixed(2).replace('.', ',')}
+              </h3>
             </Price>
             <AddCart>
               <ion-icon name="cart"></ion-icon>
@@ -56,16 +56,9 @@ function Produto() {
           <ion-icon name="document"></ion-icon>
           <H2>Descrição do produto</H2>
         </DescriptionTitle>
-        <H2>{product.name}</H2>
+        <H2>{isLoading ? '' : product.name}</H2>
         <DescriptionSubTitle>
-          {product.description.map((i) => {
-            return (
-              <>
-                <h5>{i.title}</h5>
-                <h6>{i.text}</h6>
-              </>
-            );
-          })}
+          {isLoading ? '' : product.description}
         </DescriptionSubTitle>
       </Description>
     </Body>
@@ -145,7 +138,7 @@ const Content = styled.div`
     flex-direction: column;
 
     h3 {
-        margin-bottom: 15px;
+      margin-bottom: 15px;
     }
   }
 `;
@@ -175,14 +168,13 @@ const Price = styled.div`
     color: rgb(255, 101, 0);
   }
 
-    @media (max-width: 420px) {
-        align-items: center;
+  @media (max-width: 420px) {
+    align-items: center;
 
-        h4 {
-            text-align: left;
-        }
+    h4 {
+      text-align: left;
     }
- 
+  }
 `;
 
 const AddCart = styled.div`
@@ -207,7 +199,6 @@ const AddCart = styled.div`
   }
 
   @media (max-width: 420px) {
-
   }
 `;
 
@@ -247,19 +238,6 @@ const DescriptionTitle = styled.div`
 `;
 
 const DescriptionSubTitle = styled.div`
-
-    padding-left: 3px;
-    color: rgb(86, 92, 105);
-
-    h5 {
-        font-size: 16px;
-        font-weight: bold;
-        margin: 10px 0;
-    }
-
-    h6 {
-        margin-bottom: 25px;
-    }
+  padding-left: 3px;
+  color: rgb(86, 92, 105);
 `;
-
-export default Produto;

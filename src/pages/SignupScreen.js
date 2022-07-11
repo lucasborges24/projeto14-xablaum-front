@@ -1,21 +1,21 @@
-import { useState, useContext } from "react";
-import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
-import { Oval } from "react-loader-spinner";
-import axios from "axios";
+import { useState, useContext } from 'react';
+import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import { Oval } from 'react-loader-spinner';
+import axios from 'axios';
 
-import { Input } from "../shared/Input";
-import { ButtonWhite } from "../shared/Button";
-import UserContext from "../contexts/UserContext";
+import { Input } from '../shared/Input';
+import { ButtonWhite } from '../shared/Button';
+import UserContext from '../contexts/UserContext';
 
-function Cadastro() {
+export default function SignupScreen() {
   const { URL } = useContext(UserContext);
   const navigate = useNavigate();
   const [cadastroData, setCadastroData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
   });
   const [enableButton, setEnableButton] = useState(true);
 
@@ -28,18 +28,18 @@ function Cadastro() {
       name: cadastroData.name,
       email: cadastroData.email,
       password: cadastroData.password,
-      confirmPassword: cadastroData.confirmPassword
+      confirmPassword: cadastroData.confirmPassword,
     };
-    console.log(dataCadastro)
+    console.log(dataCadastro);
     const response = axios.post(`${URL}/sign-up`, dataCadastro);
 
     response
-      .then(() => navigate("/login"))
+      .then(() => navigate('/login'))
       .catch((err) => {
         alert(
           `Ocorreu o erro: ${err.response.data}. Por favor, tente novamente`
         );
-        console.log(err.response.data)
+        console.log(err.response.data);
         setEnableButton(true);
       });
   }
@@ -220,5 +220,3 @@ const GoToSignIn = styled.div`
     outline: currentColor;
   }
 `;
-
-export default Cadastro;

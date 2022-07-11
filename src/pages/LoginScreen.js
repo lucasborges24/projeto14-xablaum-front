@@ -8,7 +8,7 @@ import { Input } from '../shared/Input';
 import { ButtonWhite } from '../shared/Button';
 import UserContext from '../contexts/UserContext';
 
-function Login() {
+export default function LoginScreen() {
   const { URL, setUserToken, userToken } = useContext(UserContext);
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
@@ -35,9 +35,9 @@ function Login() {
       email: loginData.email,
       password: loginData.password,
     };
-    const response = axios.post(`${URL}/login`, dataLogin);
+    const promise = axios.post(`${URL}/login`, dataLogin);
 
-    response
+    promise
       .then(({ data }) => {
         setUserToken(data);
         navigate('/');
@@ -188,5 +188,3 @@ const GoToSignUp = styled.div`
     outline: currentColor;
   }
 `;
-
-export default Login;
