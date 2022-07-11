@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 import { ButtonWhite, ButtonOrange } from "../shared/Button";
 
-export default function CheckoutScreen() {
+export default function CartScreen() {
   const products = {
     product: [
       {
@@ -24,15 +25,17 @@ export default function CheckoutScreen() {
   };
 
   const navigate = useNavigate()
-
+  const [cartValues, setCartValues] = useState(products.product.map((i, ind) => i.qtd))
+  console.log(cartValues)
   function total() {
     let sum = 0;
     for (let i = 0; i < products.product.length; i ++) {
         sum += products.product[i].newPrice
     }
-    console.log(sum)
     return sum;
   }
+
+  
 
   return (
     <CheckoutBody>
@@ -41,8 +44,8 @@ export default function CheckoutScreen() {
           <AddressInfo>
             <AddressBox>
               <Icon>
-                <ion-icon name="train"></ion-icon>
-                <h2>informações da sua entrega</h2>
+                <ion-icon name="map"></ion-icon>
+                <h2>Selecione o endereço</h2>
               </Icon>
               <AddressTitle>
                 <h2>Endereço de entrega</h2>
@@ -63,9 +66,9 @@ export default function CheckoutScreen() {
                 <h2>Lista de produtos</h2>
               </Icon>
 
-              {products.product.map((i) => 
+              {products.product.map((i, ind) => 
                 <>
-                  <Product>
+                  <Product key={ind}>
                     <ProductLeft>
                       <img
                         src={i.image}
@@ -76,7 +79,12 @@ export default function CheckoutScreen() {
                     <ProductRight>
                       <Qtd>
                         <h2>Quant:</h2>
-                        <p>{i.qtd}</p>
+                        <input type="number" step='0' value={cartValues[ind]} onChange={(e) => setCartValues(cartValues.map((ind2, ind3) => {
+                            if (ind === ind3) {
+                                ind2 = Number(e.target.value)
+                            }
+                            return ind2;
+                        }))}/>
                       </Qtd>
                       <Price>
                         <h2>Preço:</h2>
@@ -110,8 +118,8 @@ export default function CheckoutScreen() {
             <ResumoTotal>
               <h4>R$&nbsp;{total().toFixed(2).replace('.',',')}</h4>
             </ResumoTotal>
-            <ButtonOrange>Finalizar</ButtonOrange>
-            <ButtonWhite onClick={navigate('/cart')}>Voltar</ButtonWhite>
+            <ButtonOrange>Ir para o pagamento</ButtonOrange>
+            <ButtonWhite onClick={navigate('/')}>Voltar</ButtonWhite>
           </ResumoBody>
         </Resumo>
       </CheckoutStyle>
@@ -277,6 +285,28 @@ const Qtd = styled.div`
     font-weight: 400;
     color: rgb(66, 70, 77);
   }
+
+  input {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 2.2rem;
+    text-align: center;
+    min-width: 1.5rem;
+    border: none;
+    font-size: 14px;
+    font-family: Poppins, sans-serif
+  }
+
+  input:focus {
+    font-size: 16px;
+    font-family: Poppins, sans-serif;
+    outline: none;
+    border-color: #ffffff;
+  }
+
 `;
 
 const Price = styled.div`
