@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import UserContext from '../contexts/UserContext';
@@ -8,8 +8,9 @@ import UserContext from '../contexts/UserContext';
 export default function ProductScreen() {
   const [product, setProduct] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const { URL, userToken } = useContext(UserContext);
+  const { URL, userToken, setUserToken } = useContext(UserContext);
   const { productId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const promise = axios.get(`${URL}/product/${productId}`);
@@ -28,28 +29,33 @@ export default function ProductScreen() {
   }, []);
 
   function addToCart() {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-      },
-    };
-    const body = {
-      name: product.name,
-      oldPrice: product.oldPrice,
-      newPrice: product.newPrice,
-      image: product.image,
-      description: product.description,
-    };
-    const promise = axios.post(URL + '/cart', body, config);
-    promise
-      .then((response) => {
-        alert(
-          'Adicionado ao carrinho, clique no carrinho para ver suas compras!'
-        );
-      })
-      .catch((error) => {
-        alert(error.response.data);
-      });
+    if (userToken) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      };
+      const body = {
+        name: product.name,
+        oldPrice: product.oldPrice,
+        newPrice: product.newPrice,
+        image: product.image,
+        description: product.description,
+      };
+      const promise = axios.post(URL + '/cart', body, config);
+      promise
+        .then((response) => {
+          alert(
+            'Adicionado ao carrinho, clique no carrinho para ver suas compras!'
+          );
+        })
+        .catch((error) => {
+          alert(error.response.data);
+        });
+    } else {
+      setUserToken('');
+      navigate('/login');
+    }
   }
 
   return (
